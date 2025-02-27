@@ -1,4 +1,6 @@
 import { LlmService } from './llmService.js';
+import { WebSearchService } from './webSearchService.js';
+import { SearchCommandHandler } from '../handlers/searchCommandHandler.js';
 
 /**
  * Message Service
@@ -14,6 +16,9 @@ export class MessageService {
   constructor(adapter, options = {}) {
     this.adapter = adapter;
     this.llmService = new LlmService(options.llm || {});
+    this.userStates = new Map();
+    this.webSearchService = new WebSearchService(options.webSearch || {});
+    this.searchHandler = new SearchCommandHandler(adapter, this.webSearchService, this.userStates);
     
     // Config options with defaults
     this.config = {
@@ -47,6 +52,10 @@ export class MessageService {
     try {
       // Log incoming message
       console.log(`Received message from ${sender}: ${message}`);
+
+      if (await this.searchHandler.handleDirectMessage(sender, message)) {
+        return;
+      }
       
       // Check if it's a command
       if (this.config.prefixCommands && message.startsWith(this.config.commandPrefix)) {
@@ -99,11 +108,18 @@ ${this.config.commandPrefix}provider - Show current LLM provider
 ${this.config.commandPrefix}provider list - List available providers
 ${this.config.commandPrefix}provider set <name> - Switch to a different provider
 ${this.config.commandPrefix}system <prompt> - Set system prompt
+${this.config.commandPrefix}search <query> - Search the web
+${this.config.commandPrefix}open <number> - Open a search result
+${this.config.commandPrefix}back - Return to search results
+${this.config.commandPrefix}link <number> - Follow a link on a webpage
+${this.config.commandPrefix}more - Show more content from current page
+${this.config.commandPrefix}exit - Exit search/browse mode
         `.trim());
         break;
         
       case 'clear':
         const result = this.llmService.clearConversationHistory(sender);
+        this.webSearchService.clearUserContent(sender);
         await this.adapter.sendMessage(sender, result.message);
         break;
         

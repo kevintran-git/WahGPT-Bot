@@ -28,11 +28,18 @@ const main = async () => {
       maxHistoryLength: 10,
       contextLimit: 4000
     };
+
+    const webSearchConfig = {
+      serperApiKey: process.env.SERPER_API_KEY,
+      searchResultsLimit: 5,
+      contentSummaryLength: 1500
+    };
     
     // Create and initialize the message service
     // Here's the fix: create an instance of MessageService
     const messageService = new MessageService(adapter, { 
       llm: llmConfig,
+      webSearch: webSearchConfig,
       prefixCommands: true,
       commandPrefix: '!'
     });
