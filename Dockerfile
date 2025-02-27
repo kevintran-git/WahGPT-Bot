@@ -28,4 +28,4 @@ RUN mkdir -p /usr/src/app/logs /usr/src/app/session && \
 USER nodejs
 
 # Command to run the app
-CMD ["node", "src/index.js"]
+CMD ["node", "src/index.js", "--whatsapp", "--production"]
