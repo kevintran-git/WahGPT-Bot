@@ -20,8 +20,9 @@ ENV NODE_ENV=production
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 -G nodejs
 
-# Change ownership of the app directory to the non-root user
-RUN chown -R nodejs:nodejs /usr/src/app
+# Create required directories with proper permissions (if they don't exist)
+RUN mkdir -p /usr/src/app/logs /usr/src/app/session && \
+    chmod 777 /usr/src/app/logs /usr/src/app/session
 
 # Switch to non-root user
 USER nodejs
