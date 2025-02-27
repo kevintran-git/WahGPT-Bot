@@ -1,0 +1,26 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables and secrets
+.env
+
+# WhatsApp session data
+session/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Docker volumes
+docker-volumes/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo

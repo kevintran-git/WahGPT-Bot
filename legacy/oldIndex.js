@@ -1,7 +1,6 @@
 import ws from '@whiskeysockets/baileys';
 import { remove } from 'fs-extra';
 import { serialize } from './lib/waClient.js';
-import axios from 'axios';
 import P from 'pino';
 import { Boom } from '@hapi/boom';
 
@@ -59,9 +58,9 @@ const start = async () => {
         }
 
         try {
-            const text = await axios.get(`https://oni-chan-unique-api.vercel.app/gpt4?text=${M.body}`);
-            const botResponse = text.data.result;
-            response += `*🤖Bot:* ${botResponse}`;;
+            // const text = await axios.get(`https://oni-chan-unique-api.vercel.app/gpt4?text=${M.body}`);
+            const botResponse = "this is a test";
+            response += `*🤖Bot:* ${botResponse}`;
 
             console.log(`${colors.user}👤 User: ${M.body}${colors.reset}`);
             console.log(`${colors.bot}🤖 Bot: ${botResponse}${colors.reset}`);

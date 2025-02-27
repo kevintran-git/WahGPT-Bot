@@ -1,21 +1,34 @@
 {
-   "type": "module",
-   "name": "whatsgpt-main",
+   "name": "llm-chat-bot",
    "version": "1.0.0",
-   "description": "",
-   "main": "index.js",
-   "keywords": [],
-   "author": "",
-   "license": "ISC",
+   "description": "A chat bot with LLM integration and switchable adapters",
+   "main": "src/index.js",
+   "type": "module",
    "scripts": {
-      "start": "node --optimize_for_size --max_old_space_size=460 index.js"
+     "start": "node src/index.js",
+     "dev": "node src/index.js",
+     "whatsapp": "node src/index.js --whatsapp",
+     "production": "node src/index.js --production",
+     "whatsapp-prod": "node src/index.js --whatsapp --production",
+     "test": "echo \"Error: no test specified\" && exit 1"
    },
+   "keywords": [
+     "chat",
+     "bot",
+     "llm",
+     "whatsapp"
+   ],
+   "author": "Kevin Tran",
+   "license": "MIT",
    "dependencies": {
       "@hapi/boom": "^10.0.1",
       "@whiskeysockets/baileys": "^6.6.0",
       "axios": "^1.6.8",
       "fs-extra": "^11.1.0",
+      "dotenv": "^16.3.1",
+      "readline": "^1.3.0",
       "pino": "^8.8.0",
+      "openai": "^4.24.1",
       "qr-image": "^3.2.0",
       "qrcode-terminal": "^0.12.0"
    }
